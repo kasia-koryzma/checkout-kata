@@ -1,5 +1,7 @@
-require 'spec_helper'
-require 'checkout'
+require_relative 'lib/checkout'
+require_relative 'lib/price_calculator'
+require_relative 'lib/prices'
+require_relative 'lib/discounts'
 
 RSpec.describe Checkout do
   describe '#total' do
@@ -97,8 +99,74 @@ RSpec.describe Checkout do
       end
 
       it 'returns the discounted price for the basket' do
-        pending 'You need to write the code to satisfy this test'
         expect(total).to eq(600)
+      end
+    end
+    
+    context 'when a two for 1 applies on apples in multiples' do
+      before do
+        6.times { checkout.scan(:apple) }
+      end
+
+      it 'returns the discounted price for the basket' do
+        expect(total).to eq(30)
+      end
+
+      context 'and there is another apple added to which no discount applies' do
+        before do
+          checkout.scan(:apple)
+        end
+
+        it 'returns the correctly discounted price for the basket' do
+          expect(total).to eq(40)
+        end
+      end
+    end
+    
+    context 'when a half price offer applies on bananas and there are multiples of them' do
+      before do
+        3.times { checkout.scan(:banana) }
+      end
+
+      it 'returns the discounted price for the basket' do
+        expect(total).to eq(45)
+      end
+    end
+    
+    context 'when a half price offer applies on pineapples restricted to 1 per customer and there are multiples of them' do
+      before do
+        5.times { checkout.scan(:pineapple) }
+      end
+
+      it 'returns the discounted price for the basket' do
+        expect(total).to eq(450)
+      end
+    end
+    
+    context 'when a buy 3 get 1 free offer applies to mangos and there are multiples of them' do
+      before do
+        10.times { checkout.scan(:mango) }
+      end
+
+      it 'returns the discounted price for the basket' do
+        expect(total).to eq(1600)
+      end
+    end
+    
+    context 'when multiple different items are in the basket and offers apply to some of them' do
+      before do
+        # two mangoes should cost 400 
+        2.times { checkout.scan(:mango) }
+        # three pineapples should cost 250 
+        3.times { checkout.scan(:pineapple) }
+        # four pears should cost 30 
+        4.times { checkout.scan(:pear) }
+        # a banana should cost 15 
+        checkout.scan(:banana)
+      end
+
+      it 'returns the discounted price for the basket' do
+        expect(total).to eq(695)       
       end
     end
   end
