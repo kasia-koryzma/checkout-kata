@@ -1,3 +1,4 @@
+# Class responsible for calculating price for specific items, given their quantity and discounts. 
 class PriceCalculator
     
   def initialize(prices)
