@@ -31,12 +31,12 @@ The functionality is devided into two parts, each implemented in a separate clas
 - There's no logging. 
 
 ### The following files have been changed:
-lib/checkout.rb
-spec/checkout_spec.rb
+- lib/checkout.rb
+- spec/checkout_spec.rb
 
 ### The following files have been added:
-lib/discounts.rb
-lib/price_calculator.rb
-lib/prices.rb
+- lib/discounts.rb
+- lib/price_calculator.rb
+- lib/prices.rb
 
 All other files exist as the original copies.
