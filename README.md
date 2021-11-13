@@ -23,9 +23,20 @@ The functionality is devided into two parts, each implemented in a separate clas
 - Scanning items, adding valid items into the basket and working out the total price 
 - Working out the total price for an item type, based on the quantity scanned and discounts that can be applied.
 
-### Limitations and possible Improvements
+## Limitations and possible Improvements
 - The discounts that can be applied are pre-defiend within #Discounts class and cannot be changed (as the requirement is to read the discount from the database/hash). It would be ideal to have an ability to override the default discount for an item type.
 - The definition of Discounts allows to define either a 'n for m' or percentage discount. Whilst this might be sufficient in most cases, it is not exhauustive therefore limited. Also, if both of the types of discount are defined for an item type, the first one will be selected which might not necessairly be the best one. Having two different types of discounts for one item is very unusual hence why 'best discount' methodology has not been implemented.  
 - Every time the total is called for a checkout, the total is recalculated for all items. It might be better, performance wise, to recalculate the total for newly scanned items and add it to the totals for other items.
 - There's no way to clear the basket/delete an item. Methods to achieve this should exist.
 - There's no logging. 
+
+### The following files have been changed:
+lib/checkout.rb
+spec/checkout_spec.rb
+
+### The following files have been added:
+lib/discounts.rb
+lib/price_calculator.rb
+lib/prices.rb
+
+All other files exist as the original copies.
