@@ -169,5 +169,11 @@ RSpec.describe Checkout do
         expect(total).to eq(695)       
       end
     end
+
+    context 'when scanning an unknown item' do
+      it 'should return an error' do
+        expect { checkout.scan(:invalid_item) }.to raise_error
+      end
+    end      
   end
 end
